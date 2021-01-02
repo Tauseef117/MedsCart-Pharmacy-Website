@@ -3,13 +3,19 @@
 
 {% block content %}
     <div class="row">
+        <script>
+            function refresh(){
+                location.reload(true);
+                location.reload(true);
+            }
+        </script>
         {% for product in products %}
         <div class="col-lg-4">
             <img src="{{product.imageURL}}" class="thumbnail">
             <div class="box-element product">
                 <h6><strong>{{product.name}}</strong></h6>
                 <hr>
-                <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to cart</button>
+                <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart" onClick="refresh()">Add to cart</button>
                 <a href="#" class="btn btn-outline-success">View</a>
                 <h4 style="display: block; float: right"><strong>₹ {{product.price|floatformat:2}}</strong></h4>
             </div>
