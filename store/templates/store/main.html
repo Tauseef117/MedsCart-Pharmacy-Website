@@ -29,6 +29,14 @@
         const csrftoken = getToken('csrftoken');
     </script>
 
+    <style>
+      .hello-msg{
+       font-size: 18px;
+       color: #fff;
+       margin-right: 20px;
+  }
+</style>
+
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -44,7 +52,8 @@
                 </li>
             </ul>
             <div class="form-inline my-2 my-lg-0">
-                <a href="#" class="btn btn-warning">Login</a>
+                <span class="hello-msg">Hello, {{request.user}}</span>
+                <a href="{% url 'logout' %}" class="btn btn-warning">Logout</a>
                 <a href="{% url 'cart' %}">
                     <img src="{% static 'images/cart.png' %}" id="cart-icon">
                 </a>

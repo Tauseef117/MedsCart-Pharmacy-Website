@@ -1,10 +1,60 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
 from django.http import JsonResponse
 import json
 import datetime
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from .forms import CreateUserForm
+from .decorators import unauthenticated_user
+
 # Create your views here.
 
+@unauthenticated_user
+def registerPage(request):
+    if request.user.is_authenticated:
+        return redirect('store')
+    else:
+        form = CreateUserForm()
+        if request.method == 'POST':
+            form = CreateUserForm(request.POST)
+            if form.is_valid():
+                form.save()
+                user = form.cleaned_data.get('username')
+                messages.success(request, 'Account was created for ' + user)
+
+                return redirect('login')
+
+        context = {'form': form}
+        return render(request, 'store/register.html', context)
+
+@unauthenticated_user
+def loginPage(request):
+    if request.user.is_authenticated:
+        return redirect('store')
+    else:
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                return redirect('store')
+            else:
+                messages.info(request, 'Username OR password is incorrect')
+
+        context = {}
+        return render(request, 'store/login.html', context)
+
+
+def logoutUser(request):
+    logout(request)
+    return redirect('login')
+
+@login_required(login_url='login')
 def store(request):
     if request.user.is_authenticated:
         customer = request.user.customer
@@ -20,6 +70,7 @@ def store(request):
     context = { 'products': products, 'cartItems':cartItems}
     return render(request, 'store/store.html', context)
 
+@login_required(login_url='login')
 def cart(request):
     if request.user.is_authenticated:
         customer = request.user.customer
@@ -33,6 +84,7 @@ def cart(request):
     context = { 'items': items, 'order': order,'cartItems':cartItems}
     return render(request, 'store/cart.html', context)
 
+@login_required(login_url='login')
 def checkout(request):
     if request.user.is_authenticated:
         customer = request.user.customer
@@ -46,6 +98,7 @@ def checkout(request):
     context = { 'items': items, 'order': order,'cartItems':cartItems}
     return render(request, 'store/checkout.html', context)
 
+@login_required(login_url='login')
 def updateItem(request):
     data = json.loads(request.body)
     productId = data['productId']
@@ -69,9 +122,10 @@ def updateItem(request):
 
 from django.views.decorators.csrf import csrf_exempt
 
+@login_required(login_url='login')
 @csrf_exempt
+
 def processOrder(request):
-    print('Data',request.body)
     transaction_id = datetime.datetime.now().timestamp()
     data = json.loads(request.body)
 
