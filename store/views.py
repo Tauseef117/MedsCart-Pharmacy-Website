@@ -29,6 +29,7 @@ def registerPage(request):
         context = {'form': form}
         return render(request, 'store/register.html', context)
 
+
 @unauthenticated_user
 def loginPage(request):
     if request.user.is_authenticated:
@@ -54,27 +55,24 @@ def logoutUser(request):
     logout(request)
     return redirect('login')
 
+
 @login_required(login_url='login')
 def store(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items= order.orderitem_set.all()
-        cartItems= order.get_cart_items
-    else:
-        items = []
-        order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping':False}
-        cartItems =order['get_cart_items']
+    customer = request.user.customer
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    cartItems= order.get_cart_items
 
     products = Product.objects.all()
     context = { 'products': products, 'cartItems':cartItems}
     return render(request, 'store/store.html', context)
+
 
 def searchMatch(query, item):
     if query in item.name.lower() or query in item.name or query in item.name.upper():
         return True
     else:
         return False
+
 
 @login_required(login_url='login')
 def search(request):
@@ -83,46 +81,36 @@ def search(request):
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items= order.orderitem_set.all()
         cartItems= order.get_cart_items
-    else:
-        items = []
-        order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping':False}
-        cartItems =order['get_cart_items']
 
     products = Product.objects.all()
     search_items = [itm for itm in products if searchMatch(query, itm)]
+
     if len(search_items) > 0 and len(query) > 1:
         context = { 'products': search_items, 'cartItems':cartItems , "msg":""}
     else:
         context = {'products': search_items, 'cartItems': cartItems, 'msg': "Oops!...Item not available!"}
     return render(request, 'store/store.html', context)
 
+
 @login_required(login_url='login')
 def cart(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer = customer, complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
-    else:
-        items = []
-        order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping':False}
-        cartItems = order['get_cart_items']
+    customer = request.user.customer
+    order, created = Order.objects.get_or_create(customer = customer, complete=False)
+    items = order.orderitem_set.all()
+    cartItems = order.get_cart_items
+
     context = { 'items': items, 'order': order,'cartItems':cartItems}
     return render(request, 'store/cart.html', context)
 
+
 @login_required(login_url='login')
 def checkout(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
-    else:
-        order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping':False}
-        items = []
-        cartItems = order['get_cart_items']
+    customer = request.user.customer
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    items = order.orderitem_set.all()
+    cartItems = order.get_cart_items
+
     context = { 'items': items, 'order': order,'cartItems':cartItems}
     return render(request, 'store/checkout.html', context)
 
@@ -132,8 +120,6 @@ def updateItem(request):
     productId = data['productId']
     action = data['action']
 
-    print('Action ', action)
-    print('productid', productId)
     customer = request.user.customer
     product = Product.objects.get(id=productId)
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
@@ -157,26 +143,22 @@ def processOrder(request):
     transaction_id = datetime.datetime.now().timestamp()
     data = json.loads(request.body)
 
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        total = float(data['form']['total'])
-        order.transaction_id = transaction_id
+    customer = request.user.customer
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    total = float(data['form']['total'])
+    order.transaction_id = transaction_id
 
-        if total == float(order.get_cart_total):
-            order.complete = True
-        order.save()
+    if total == float(order.get_cart_total):
+        order.complete = True
+    order.save()
 
-        if order.shipping == True:
-            ShippingAddress.objects.create(
-                customer=customer,
-                Order=order,
-                address=data['shipping']['address'],
-                city=data['shipping']['city'],
-                state=data['shipping']['state'],
-                zipcode=data['shipping']['zipcode'],
-            )
-
-    else:
-        print("User is not logged in!")
+    if order.shipping == True:
+        ShippingAddress.objects.create(
+            customer=customer,
+            Order=order,
+            address=data['shipping']['address'],
+            city=data['shipping']['city'],
+            state=data['shipping']['state'],
+            zipcode=data['shipping']['zipcode'],
+        )
     return JsonResponse('Payment complete!', safe=False)
