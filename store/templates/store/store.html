@@ -8,6 +8,12 @@
             alert('{{msg}}');
             window.location.href = "/"
             {% endif %}
+
+            function anony_check(){
+                if(user === 'AnonymousUser'){
+                    location.href="/login/"
+                }
+            }
         </script>
 
         {% for product in products %}
@@ -16,7 +22,7 @@
             <div class="box-element product">
                 <h6><strong>{{product.name}}</strong></h6>
                 <hr>
-                <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to cart</button>
+                <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart" onclick="anony_check()">Add to cart</button>
                 <a href="#" class="btn btn-outline-success">View</a>
                 <h4 style="display: block; float: right"><strong>₹ {{product.price|floatformat:2}}</strong></h4>
             </div>

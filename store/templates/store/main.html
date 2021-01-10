@@ -54,14 +54,18 @@
             <div class="form-inline my-2 my-lg-0">
                 <form method='get' action='/search/' class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="search" aria-label="search" name="search" id="search" >
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search    </button>
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
                 <span class="hello-msg">Hello, {{request.user}}</span>
-                <a href="{% url 'logout' %}" class="btn btn-warning">Logout</a>
                 <a href="{% url 'cart' %}">
                     <img src="{% static 'images/cart.png' %}" id="cart-icon">
                 </a>
                 <p id="cart-total">{{cartItems}}</p>
+                {% if user.is_anonymous %}
+                    <a href="{% url 'login' %}" class="btn btn-warning">Login</a>
+                {% else %}
+                    <a href="{% url 'logout' %}" class="btn btn-warning">Logout</a>
+                {% endif %}
             </div>
 
         </div>
