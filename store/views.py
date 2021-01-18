@@ -73,7 +73,7 @@ def store(request):
 
 
 def searchMatch(query, item):
-    if query in item.name.lower() or query in item.name or query in item.name.upper():
+    if query.lower() in item.name.lower() :
         return True
     else:
         return False
