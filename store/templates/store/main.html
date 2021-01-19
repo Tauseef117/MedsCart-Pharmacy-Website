@@ -5,9 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medicine E-COM</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'images/logo5.svg' %}">
     <script type="text/javascript">
         var user = '{{request.user}}';
 
@@ -29,60 +28,78 @@
         const csrftoken = getToken('csrftoken');
     </script>
 
-    <style>
-      .hello-msg{
-       font-size: 18px;
-       color: #fff;
-       margin-right: 20px;
-  }
-</style>
-
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{% url 'store' %}">Meds</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'store' %}">Store <span class="sr-only">(current)</span></a>
-                </li>
-            </ul>
-            <div class="form-inline my-2 my-lg-0">
-                <form method='get' action='/search/' class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="search" aria-label="search" name="search" id="search" >
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-                <span class="hello-msg">Hello, {{request.user}}</span>
-                <a href="{% url 'cart' %}">
-                    <img src="{% static 'images/cart.png' %}" id="cart-icon">
-                </a>
-                <p id="cart-total">{{cartItems}}</p>
-                {% if user.is_anonymous %}
-                    <a href="{% url 'login' %}" class="btn btn-warning">Login</a>
-                {% else %}
-                    <a href="{% url 'logout' %}" class="btn btn-warning">Logout</a>
-                {% endif %}
-            </div>
-
+<body class="light">
+    <!-- Nav start -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <!-- Logo -->
+        <div class="logo">
+            <a class="navbar-brand" href="{% url 'store' %}">MedsCart</a>
+            <img src="{% static 'images/logo5.svg' %}" class="logo-svg">           
         </div>
+        <div class="search">
+            <form method='get' action='/search/' class="form-inline">
+                <input class="form-control" type="search" placeholder="Item Name" aria-label="search" name="search" id="search" >
+                <button class="search-btn" type="submit">
+                    <img src="{% static 'images/search.svg' %}">
+                </button>
+            </form>
+        </div>
+        <ul class="nav-links">
+            <li>
+                <span class="hello-msg">Hello, {{request.user}}</span>
+            </li>
+            <li>
+                <a class="nav-link" href="{% url 'store' %}">Store</a>
+            </li>
+            
+            <li class="cart-link">
+                <a href="{% url 'cart' %}">
+                    <!-- <img src="{% static 'images/cart.svg' %}" id="cart-icon"> -->
+                    <svg id="cart-icon" width="20" height="20" viewBox="0 0 20 20"  xmlns="http://www.w3.org/2000/svg">
+                        <path class="cart-path-fill" d="M6 16C4.9 16 4.01 16.9 4.01 18C4.01 19.1 4.9 20 6 20C7.1 20 8 19.1 8 18C8 16.9 7.1 16 6 16ZM0 0V2H2L5.6 9.59L4.25 12.04C4.09 12.32 4 12.65 4 13C4 14.1 4.9 15 6 15H18V13H6.42C6.28 13 6.17 12.89 6.17 12.75L6.2 12.63L7.1 11H14.55C15.3 11 15.96 10.59 16.3 9.97L19.88 3.48C19.96 3.34 20 3.17 20 3C20 2.45 19.55 2 19 2H4.21L3.27 0H0ZM16 16C14.9 16 14.01 16.9 14.01 18C14.01 19.1 14.9 20 16 20C17.1 20 18 19.1 18 18C18 16.9 17.1 16 16 16Z" />
+                    </svg>  
+                    <p id="cart-total">{{cartItems}}</p>
+                </a>
+            </li>
+            <li>
+                {% if user.is_anonymous %}
+                    <a href="{% url 'login' %}" class="login">Login</a>
+                {% else %}
+                    <a href="{% url 'logout' %}" class="logout">Logout</a>
+                {% endif %}
+            </li>
+            <li>
+                <button class="light-btn">
+                    <svg viewBox="0 0 512 512"><g><path fill="currentColor" d="M502.42 240.5l-94.7-47.3 33.5-100.4c4.5-13.6-8.4-26.5-21.9-21.9l-100.4 33.5-47.41-94.8a17.31 17.31 0 0 0-31 0l-47.3 94.7L92.7 70.8c-13.6-4.5-26.5 8.4-21.9 21.9l33.5 100.4-94.7 47.4a17.31 17.31 0 0 0 0 31l94.7 47.3-33.5 100.5c-4.5 13.6 8.4 26.5 21.9 21.9l100.41-33.5 47.3 94.7a17.31 17.31 0 0 0 31 0l47.31-94.7 100.4 33.5c13.6 4.5 26.5-8.4 21.9-21.9l-33.5-100.4 94.7-47.3a17.33 17.33 0 0 0 .2-31.1zm-155.9 106c-49.91 49.9-131.11 49.9-181 0a128.13 128.13 0 0 1 0-181c49.9-49.9 131.1-49.9 181 0a128.13 128.13 0 0 1 0 181z" class="fk-secondary"></path><path fill="currentColor" d="M352 256a96 96 0 1 1-96-96 96.15 96.15 0 0 1 96 96z" class="fk-primary"></path></g></svg>
+                </button>
+                <button class="dark-btn">
+                    <svg  viewBox="0 0 512 512"><g><path fill="currentColor" d="M320 32L304 0l-16 32-32 16 32 16 16 32 16-32 32-16zm138.7 149.3L432 128l-26.7 53.3L352 208l53.3 26.7L432 288l26.7-53.3L512 208z" class="fk-secondary"></path><path fill="currentColor" d="M332.2 426.4c8.1-1.6 13.9 8 8.6 14.5a191.18 191.18 0 0 1-149 71.1C85.8 512 0 426 0 320c0-120 108.7-210.6 227-188.8 8.2 1.6 10.1 12.6 2.8 16.7a150.3 150.3 0 0 0-76.1 130.8c0 94 85.4 165.4 178.5 147.7z" class="fk-primary"></path></g></svg>
+                </button>
+                <script>
+                    const theme = localStorage.getItem('theme');
+                    if(!theme){
+                        document.querySelector('.light-btn').classList.add('hidden');
+                    }
+                </script>
+            </li>
+        </ul>
     </nav>
-
-
-    <hr>
-
-    <div class="container">
+    <!-- nav end -->
+    <div class="display-image">
+        <div class="close">
+            <img src="{% static 'images/cross.svg' %}">
+        </div>
+        <div class="display-img-container">
+            <img src="" class="image-d">
+        </div>
+    </div>
+      <div class="container">
+          
         <br>
         {% block content %}
         {% endblock %}
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="{% static 'js/cart.js' %}" type="text/javascript"></script>
 </body>
 </html>

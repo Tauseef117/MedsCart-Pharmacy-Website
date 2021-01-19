@@ -1,0 +1,17 @@
+@media only screen and (max-width: 1330px) {
+    .nav-links{
+        width: 20%;
+    }
+    .nav-links a{
+        font-size: 1rem;
+    }
+  }
+  @media only screen and (max-width: 360px) {
+    .navbar{
+        flex-direction: column;
+    }
+    .nav-links{
+       display: none;
+    }
+    
+  }
