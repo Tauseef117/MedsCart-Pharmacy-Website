@@ -18,6 +18,10 @@
 	#orders-pending{
 		background-color: #7CD1C0;
 	}
+	img{
+		height: 150px;
+  		width: 150px;
+	}
 </style>
 
 <div class="row">
@@ -28,20 +32,26 @@
 		<div class="card card-body">
 			<table class="table table-sm">
 				<tr>
-					<th>Date Orderd</th>
+					<th>Product</th>
+					<th>Name</th>
+					<th>Date Ordered</th>
+					<th>Product Quantity</th>
+					<th>Product Price</th>
 					<th>Status</th>
-					<th>Items Quantity</th>
-					<th>Items Price</th>
-					<th>Cancel Order</th>
 				</tr>
 
 				{% for order in orders %}
 					<tr>
-						<td>{{order.date_ordered}}</td>
+						<td>
+							<div class="image-container">
+                				<img src="{{order.product.imageURL}}" class="thumbnail">
+            				</div>
+						</td>
+						<td>{{order.product}}</td>
+						<td>{{order.date_added}}</td>
+						<td>{{order.quantity}}</td>
+						<td>{{order.get_total}}</td>
 						<td>{{order.status}}</td>
-						<td></td>
-						<td></td>
-						<td><a href="">Cancel </a></td>
 
 					</tr>
 				{% endfor %}

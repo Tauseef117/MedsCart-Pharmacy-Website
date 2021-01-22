@@ -127,7 +127,8 @@ def updateItem(request):
     customer = request.user.customer
     product = Product.objects.get(id=productId)
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
-    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+    #a
+    orderItem, created = OrderItem.objects.get_or_create(customer=customer,order=order, product=product)
     if action == "add":
         orderItem.quantity = (orderItem.quantity + 1)
     elif action == "remove":
@@ -170,7 +171,7 @@ def processOrder(request):
 #a
 @login_required(login_url='login')
 def my_orders(request):
-	orders = Order.objects.filter(customer=request.user.customer)
+	orders = OrderItem.objects.filter(customer=request.user.customer)
 	total_orders = orders.count()
 	delivered = orders.filter(status='Delivered').count()
 	pending = total_orders - delivered
