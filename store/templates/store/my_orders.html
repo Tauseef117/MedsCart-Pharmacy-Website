@@ -1,0 +1,55 @@
+{%  extends 'store/main2.html' %}
+
+{% block content %}
+
+{%  include 'store/status.html' %}
+
+<br>
+<style>
+	body{
+		background-color: #ebeff5;
+	}
+	#total-orders{
+		background-color: #4cb4c7;
+	}
+	#orders-delivered{
+		background-color: #7abecc;
+	}
+	#orders-pending{
+		background-color: #7CD1C0;
+	}
+</style>
+
+<div class="row">
+
+	<div class="col-md-7">
+		<h5>MY ORDERS</h5>
+		<hr>
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th>Date Orderd</th>
+					<th>Status</th>
+					<th>Items Quantity</th>
+					<th>Items Price</th>
+					<th>Cancel Order</th>
+				</tr>
+
+				{% for order in orders %}
+					<tr>
+						<td>{{order.date_ordered}}</td>
+						<td>{{order.status}}</td>
+						<td></td>
+						<td></td>
+						<td><a href="">Cancel </a></td>
+
+					</tr>
+				{% endfor %}
+
+			</table>
+		</div>
+	</div>
+
+</div>
+
+{% endblock %}

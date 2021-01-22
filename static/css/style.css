@@ -232,7 +232,7 @@ body {
 }
 
 .image-container {
-  width: 17rem;
+  width: 18rem;
   height: 10rem;
   margin: 1rem;
   border-radius: 20px;
@@ -241,7 +241,7 @@ body {
 }
 
 .image-container img {
-  width: 17rem;
+  width: 100%;
   height: 10rem;
 }
 
@@ -284,7 +284,7 @@ body {
 }
 
 .product {
-  width: 17rem;
+  width: 18rem;
   margin: 1rem;
 }
 
@@ -475,7 +475,7 @@ body {
 }
 
 .checkout-container #payment-info button {
-  width: 100%;
+  width:480px;
   height: 2.8rem;
   cursor: pointer;
   background-color: var(--green);
@@ -483,7 +483,7 @@ body {
   border-radius: 10px;
   color: white;
   font-size: 1.2rem;
-  margin-bottom: 1rem;
+  margin-left: 1rem;
 }
 
 .checkout-container #payment-info button img {

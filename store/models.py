@@ -28,10 +28,20 @@ class Product(models.Model):
         return url
 
 class Order(models.Model):
+    #a
+    STATUS = (
+        ('Processing', 'Processing'),
+        ('Shipped', 'Shipped'),
+        ('Out for delivery', 'Out for delivery'),
+        ('Delivered', 'Delivered'),
+    )
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
     date_ordered = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=False, null=True, blank=False)
     transaction_id = models.CharField(max_length=200, null=True)
+    #a
+    status = models.CharField(max_length=200, null=True, choices=STATUS, default=STATUS[0][0])
+
 
     def __str__(self):
         return str(self.transaction_id)

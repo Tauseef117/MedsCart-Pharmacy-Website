@@ -10,6 +10,8 @@ urlpatterns = [
     path('register/', views.registerPage, name="register"),
 	path('login/', views.loginPage, name="login"),
 	path('logout/', views.logoutUser, name="logout"),
-    path('search/', views.search, name="search ")
+    path('search/', views.search, name="search "),
+    #a
+    path('my_orders/', views.my_orders, name="my_orders")
 
 ]

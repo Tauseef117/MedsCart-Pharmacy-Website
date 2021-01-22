@@ -166,3 +166,14 @@ def processOrder(request):
             zipcode=data['shipping']['zipcode'],
         )
     return JsonResponse('Payment complete!', safe=False)
+
+#a
+@login_required(login_url='login')
+def my_orders(request):
+	orders = Order.objects.filter(customer=request.user.customer)
+	total_orders = orders.count()
+	delivered = orders.filter(status='Delivered').count()
+	pending = total_orders - delivered
+	context = {'orders':orders, 'total_orders':total_orders,'delivered':delivered, 'pending':pending }
+
+	return render(request, 'store/my_orders.html', context)
