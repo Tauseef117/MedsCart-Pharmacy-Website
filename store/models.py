@@ -58,7 +58,6 @@ class Order(models.Model):
         total = sum([item.quantity for item in orderitems])
         return total
 
-#a
 class OrderItem(models.Model):
     STATUS = (
         ('Processing', 'Processing'),

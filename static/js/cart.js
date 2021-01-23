@@ -30,6 +30,7 @@ function updateUserOrder(productId, action) {
     })
     .then((data) => {
       console.log("data: ", data);
+      //   reload fix
       location.reload();
     });
     
@@ -91,3 +92,18 @@ imgCont.forEach((cont)=>{
 //   displayContainer.style.display = "none";
 //   // console.log("working");
 // })
+
+
+// Status color change
+const statusNames = document.querySelectorAll('.status');
+statusNames.forEach(element => {
+  if(element.textContent == 'Delivered'){
+    element.classList.add('green');
+  }
+  else if(element.textContent == 'Processing'){
+    element.classList.add('blue');
+  }
+  else if(element.textContent == 'Processing'){
+    element.classList.add('orange');
+  }
+});

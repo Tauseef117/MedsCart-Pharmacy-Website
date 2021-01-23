@@ -168,7 +168,6 @@ def processOrder(request):
         )
     return JsonResponse('Payment complete!', safe=False)
 
-#a
 @login_required(login_url='login')
 def my_orders(request):
 	orders = OrderItem.objects.filter(customer=request.user.customer)
