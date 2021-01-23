@@ -71,7 +71,10 @@
         <div class="box-element hidden" id="payment-info">
           <button id="make-payment">Pay with    <img src="{% static 'images/paytm-logo.png' %}">
           </button>
-      </div>
+        </div>
+        <div class="box-element hidden" id="payment-info2">
+          <button id="make-payment2">Pay with Debit / Credit Card </button>
+        </div>
       </form>
     </div>
   </div>
@@ -112,6 +115,7 @@
 
     if (shipping == "False" && user != "AnonymousUser") {
       document.getElementById("payment-info").classList.remove("hidden");
+      document.getElementById("payment-info2").classList.remove("hidden");
     }
 
     var form = document.getElementById("form");
@@ -121,10 +125,17 @@
       console.log("Form submitted...");
       document.getElementById("form-button").classList.add("hidden");
       document.getElementById("payment-info").classList.remove("hidden");
+      document.getElementById("payment-info2").classList.remove("hidden");
     });
 
     document
       .getElementById("make-payment")
+      .addEventListener("click", function (e) {
+        submitFormData();
+      });
+
+      document
+      .getElementById("make-payment2")
       .addEventListener("click", function (e) {
         submitFormData();
       });
