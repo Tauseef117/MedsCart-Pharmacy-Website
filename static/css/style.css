@@ -498,6 +498,15 @@ body {
   font-size: 1.2rem;
   margin-bottom: 1rem;
   margin-left: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack:center;
+        -ms-flex-pack:center;
+            justify-content:center;
+  -webkit-box-align:center;
+        -ms-flex-align:center;
+             align-items:center;
 }
 
 .checkout-container #payment-info2 button {
@@ -515,9 +524,9 @@ body {
 
 .checkout-container #payment-info button img {
   margin-left: 1rem;
-  position: absolute;
+  padding-top: 0.1rem;
   width: 5rem;
-  height: 1.5rem;
+  height: 1.7rem;
 }
 
 .checkout-container .order-summary {
